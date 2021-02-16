@@ -1,4 +1,4 @@
-// Set up the GUI for the main search screen
+// Set up the GUI for the Main search screen
 
 import javax.swing.*;
 
