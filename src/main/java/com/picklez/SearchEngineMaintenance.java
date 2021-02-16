@@ -1,2 +1,7 @@
-package com.picklez;public class SearchEngineMaintenance {
+package com.picklez;
+
+import javax.swing.*;
+
+public class SearchEngineMaintenance extends JFrame {
+
 }
