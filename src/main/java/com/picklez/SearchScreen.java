@@ -30,11 +30,13 @@ public class SearchScreen extends JFrame {
      * @see JComponent#getDefaultLocale
      */
     public SearchScreen() throws HeadlessException {
+
         add(mainPanel);
         setTitle("Search Engine");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
+        setVisible(true);
 
         aboutButton.addActionListener(new ActionListener() {
             /**
@@ -53,6 +55,16 @@ public class SearchScreen extends JFrame {
             }
         });
 
-        setVisible(true);
+        maintenanceButton.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SearchEngineMaintenance();
+            }
+        });
     }
 }
