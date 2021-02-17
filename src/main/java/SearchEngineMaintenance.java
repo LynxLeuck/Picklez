@@ -13,7 +13,6 @@ public class SearchEngineMaintenance extends JFrame {
     private ArrayList<File>[] fileList;
 
     //These private variables are used by the GUI editor on IntelliJ IDEA Editor
-    private JFrame frame;
     private TableModel model;
     private JTable fileListTable;
     private JButton rebuildBtn;

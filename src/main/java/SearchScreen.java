@@ -15,13 +15,13 @@ public class SearchScreen extends JFrame{
     private JRadioButton exactTermsRadioButton;
     private JPanel Main;
     private JLabel labelNumberOfFilesIndexed;
-
+    private SearchEngineMaintenance searchEngineMaintenance = new SearchEngineMaintenance();
 
     //Builds and sets up the Search Screen
     public SearchScreen() {
 
         //Initial Set up of the Screen
-        super("Search Engine Maintenance");
+        super("Search Engine");
         this.setContentPane(this.Main);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -30,10 +30,12 @@ public class SearchScreen extends JFrame{
 
         //Adds Buttons
         aboutButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "About", "About", JOptionPane.PLAIN_MESSAGE);
 
         });
         searchButton.addActionListener(e -> {
         });
+        maintenanceButton.addActionListener(e -> showSearchEngineMaintenance());
 
         //All Three of these radials ensure that none of the others are selected
         allOfTheSearchRadioButton.addActionListener(e -> {
@@ -51,9 +53,8 @@ public class SearchScreen extends JFrame{
 
     }
 
-    public void setSearchResults(JTextArea searchResults) {
-        this.searchResults = searchResults;
+    public void showSearchEngineMaintenance(){
+        searchEngineMaintenance.setVisible(true);
     }
-
 
 }

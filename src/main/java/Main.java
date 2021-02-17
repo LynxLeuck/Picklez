@@ -1,5 +1,5 @@
 public class Main {
-    SearchEngineMaintenance searchEngineMaintenance = new SearchEngineMaintenance();
+
     SearchScreen searchScreen = new SearchScreen();
 
 
@@ -12,16 +12,10 @@ public class Main {
     public Main(){
         //Grabs the current number of indexed files
 
-
-           showSearchEngineMaintenance();
-
-
-        showSearchScreen();
+           showSearchScreen();
 
     }
-    public void showSearchEngineMaintenance(){
-        searchEngineMaintenance.setVisible(true);
-    }
+
     public void showSearchScreen(){
         searchScreen.setVisible(true);
 
