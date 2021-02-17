@@ -2,10 +2,12 @@ package com.picklez;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SearchScreen extends JFrame {
 
-    private JLabel lblTitle;
+    private JLabel titleLabel;
     private JTextField inputText;
     private JTextArea resultsTextArea;
     private JButton searchButton;
@@ -33,6 +35,24 @@ public class SearchScreen extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
+
+        aboutButton.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                JOptionPane.showConfirmDialog(mainPanel, """
+                        Search Engine v1.0
+                        Written by Team Picklez
+                        Brought to you by pickle.jar""", "Search Engine", JOptionPane.DEFAULT_OPTION);
+
+            }
+        });
+
         setVisible(true);
     }
 }
