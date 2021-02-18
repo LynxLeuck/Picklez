@@ -1,7 +1,11 @@
 package com.picklez;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.util.Locale;
 
 public class SearchEngineMaintenance extends JFrame {
 
@@ -36,4 +40,5 @@ public class SearchEngineMaintenance extends JFrame {
         setVisible(true);
 
     }
+
 }
