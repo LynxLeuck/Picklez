@@ -38,18 +38,6 @@ public class SearchScreen extends JFrame{
         maintenanceButton.addActionListener(e -> showSearchEngineMaintenance());
 
         //All Three of these radials ensure that none of the others are selected
-        allOfTheSearchRadioButton.addActionListener(e -> {
-            anyOfTheSearchRadioButton.setSelected(false);
-            exactTermsRadioButton.setSelected(false);
-        });
-        anyOfTheSearchRadioButton.addActionListener(e -> {
-            allOfTheSearchRadioButton.setSelected(false);
-            exactTermsRadioButton.setSelected(false);
-        });
-        exactTermsRadioButton.addActionListener(e -> {
-            anyOfTheSearchRadioButton.setSelected(false);
-            allOfTheSearchRadioButton.setSelected(false);
-        });
 
     }
 

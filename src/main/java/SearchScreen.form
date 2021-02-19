@@ -118,4 +118,11 @@
       </hspacer>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="seachArguments">
+      <member id="b0f11"/>
+      <member id="3592a"/>
+      <member id="672b"/>
+    </group>
+  </buttonGroups>
 </form>
