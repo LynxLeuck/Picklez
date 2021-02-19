@@ -19,6 +19,9 @@ public class SearchScreen extends JFrame {
     private JLabel searchTermsLabel;
     private JLabel numberOfFilesLabel;
     private JPanel mainPanel;
+    JRadioButton ANDRadioButton;
+    JRadioButton ORRadioButton;
+    JRadioButton EXACTRadioButton;
 
     /**
      * Constructs a new frame
