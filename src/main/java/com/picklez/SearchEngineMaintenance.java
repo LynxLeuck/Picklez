@@ -40,5 +40,4 @@ public class SearchEngineMaintenance extends JFrame {
         setVisible(true);
 
     }
-
 }

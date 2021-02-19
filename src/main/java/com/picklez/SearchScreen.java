@@ -39,36 +39,18 @@ public class SearchScreen extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
+        setResizable(false);
         setVisible(true);
 
-        aboutButton.addActionListener(new ActionListener() {
-            /**
-             * Invoked when an action occurs.
-             *
-             * @param e the event to be processed
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                JOptionPane.showConfirmDialog(mainPanel, """
+        aboutButton.addActionListener(e -> JOptionPane.showConfirmDialog(mainPanel, """
                         Search Engine v1.0
                         Written by Team Picklez
-                        Brought to you by pickle.jar""", "Search Engine", JOptionPane.DEFAULT_OPTION);
+                        Brought to you by pickle.jar""", "Search Engine", JOptionPane.DEFAULT_OPTION)
 
-            }
-        });
 
-        maintenanceButton.addActionListener(new ActionListener() {
-            /**
-             * Invoked when an action occurs.
-             *
-             * @param e the event to be processed
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new SearchEngineMaintenance();
-            }
-        });
+        );
+
+        maintenanceButton.addActionListener(e -> new SearchEngineMaintenance());
+
     }
-
 }
