@@ -3,10 +3,6 @@ package com.picklez;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.io.File;
 
 public class SearchEngineMaintenance extends JFrame {
 
@@ -33,6 +29,7 @@ public class SearchEngineMaintenance extends JFrame {
      */
     public SearchEngineMaintenance() throws HeadlessException {
 
+        // Set up GUI
         add(maintenancePanel);
         setTitle("Search Engine Maintenance");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,8 +37,17 @@ public class SearchEngineMaintenance extends JFrame {
         setLocationRelativeTo(getParent());
         setVisible(true);
 
-        // Set up table and model
-        DefaultTableModel tableModel = new DefaultTableModel();
+        // Set up table model and add to table
+        DefaultTableModel tableModel = new DefaultTableModel(){
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // All cells false
+                return false;
+            }
+
+        };
+
         indexTable.setModel(tableModel);
         tableModel.addColumn("File Name");
         tableModel.addColumn("Status");
@@ -51,13 +57,11 @@ public class SearchEngineMaintenance extends JFrame {
             FileDialog fd = new FileDialog((Dialog) null, "Select file", FileDialog.LOAD);
             fd.setVisible(true);
             String filePath = fd.getDirectory() + fd.getFile();
-            tableModel.insertRow(0, new String[]{filePath});
+            tableModel.insertRow(0, new String[]{filePath, "Not indexed"});
         });
 
         // Remove the selected row from the table
-        removeSelectedFilesButton.addActionListener(e -> {
-            tableModel.removeRow(indexTable.getSelectedRow());
-        });
+        removeSelectedFilesButton.addActionListener(e -> tableModel.removeRow(indexTable.getSelectedRow()));
     }
 
 }

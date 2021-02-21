@@ -3,7 +3,6 @@ package com.picklez;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SearchScreen extends JFrame {
 
@@ -50,7 +49,7 @@ public class SearchScreen extends JFrame {
         EXACTRadioButton.setActionCommand("EXACT");
         EXACTRadioButton.addActionListener(this::actionPerformed);
 
-
+        // Displays basic information about the program
         aboutButton.addActionListener(e -> JOptionPane.showConfirmDialog(mainPanel, """
                 Search Engine v1.0
                 Written by Team Picklez
