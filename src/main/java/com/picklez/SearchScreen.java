@@ -19,6 +19,7 @@ public class SearchScreen extends JFrame {
     JRadioButton ANDRadioButton;
     JRadioButton ORRadioButton;
     JRadioButton EXACTRadioButton;
+    private String searchType;
 
     /**
      * Constructs a new frame
@@ -42,6 +43,14 @@ public class SearchScreen extends JFrame {
         setResizable(false);
         setVisible(true);
 
+        ANDRadioButton.setActionCommand("AND");
+        ANDRadioButton.addActionListener(this::actionPerformed);
+        ORRadioButton.setActionCommand("OR");
+        ORRadioButton.addActionListener(this::actionPerformed);
+        EXACTRadioButton.setActionCommand("EXACT");
+        EXACTRadioButton.addActionListener(this::actionPerformed);
+
+
         aboutButton.addActionListener(e -> JOptionPane.showConfirmDialog(mainPanel, """
                 Search Engine v1.0
                 Written by Team Picklez
@@ -52,7 +61,18 @@ public class SearchScreen extends JFrame {
         searchButton.addActionListener(e -> search());
     }
 
+    // Sets the search type when a radio button is clicked
+    public void actionPerformed(ActionEvent e) {
+        searchType = e.getActionCommand();
+    }
+
+    // Method executed by search button
+    // Stub data inserted for now
     private void search() {
+        resultsTextArea.setText(String.format("""
+            Search function not yet implemented.
+            
+            Search type selected: %s""", searchType));
     }
 
 }
