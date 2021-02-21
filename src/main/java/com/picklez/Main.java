@@ -11,7 +11,7 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        SearchScreen searchScreen = new SearchScreen();
+        new SearchScreen();
 
     }
 

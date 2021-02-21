@@ -1,12 +1,9 @@
 package com.picklez;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 
 public class SearchScreen extends JFrame {
 
@@ -46,14 +43,16 @@ public class SearchScreen extends JFrame {
         setVisible(true);
 
         aboutButton.addActionListener(e -> JOptionPane.showConfirmDialog(mainPanel, """
-                        Search Engine v1.0
-                        Written by Team Picklez
-                        Brought to you by pickle.jar""", "Search Engine", JOptionPane.DEFAULT_OPTION)
-
-
+                Search Engine v1.0
+                Written by Team Picklez
+                Brought to you by pickle.jar""", "Search Engine", JOptionPane.DEFAULT_OPTION)
         );
 
         maintenanceButton.addActionListener(e -> new SearchEngineMaintenance());
-
+        searchButton.addActionListener(e -> search());
     }
+
+    private void search() {
+    }
+
 }
