@@ -1,7 +1,12 @@
 package com.picklez;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.io.File;
 
 public class SearchEngineMaintenance extends JFrame {
 
@@ -35,6 +40,24 @@ public class SearchEngineMaintenance extends JFrame {
         setLocationRelativeTo(getParent());
         setVisible(true);
 
+        // Set up table and model
+        DefaultTableModel tableModel = new DefaultTableModel();
+        indexTable.setModel(tableModel);
+        tableModel.addColumn("File Name");
+        tableModel.addColumn("Status");
+
+        // Add files to the table on this form
+        addFileButton.addActionListener(e -> {
+            FileDialog fd = new FileDialog((Dialog) null, "Select file", FileDialog.LOAD);
+            fd.setVisible(true);
+            String filePath = fd.getDirectory() + fd.getFile();
+            tableModel.insertRow(0, new String[]{filePath});
+        });
+
+        // Remove the selected row from the table
+        removeSelectedFilesButton.addActionListener(e -> {
+            tableModel.removeRow(indexTable.getSelectedRow());
+        });
     }
 
 }
