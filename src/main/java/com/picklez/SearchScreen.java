@@ -1,4 +1,4 @@
-// Set up the GUI for the Main search screen
+package com.picklez;// Set up the GUI for the com.picklez.Main search screen
 
 import javax.swing.*;
 
