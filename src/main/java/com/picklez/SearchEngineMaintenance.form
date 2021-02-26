@@ -72,6 +72,7 @@
               <columnSelectionAllowed value="true"/>
               <dragEnabled value="true"/>
               <dropMode value="INSERT_ROWS"/>
+              <enabled value="true"/>
             </properties>
             <clientProperties>
               <Table.isFileList class="java.lang.Boolean" value="true"/>

@@ -1,10 +1,11 @@
 package com.picklez;/*
 This Class sets up the GUI for the Search Screen
  */
-import com.picklez.FileBrowser;
+
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -36,14 +37,28 @@ public class SearchEngineMaintenance extends JFrame {
     private JLabel labelNumberOfFilesIndexed;
     private JLabel labelSearchEngineVersion;
 
-    //Builds and sets up Gui
-    public SearchEngineMaintenance() {
+    /**
+     * Constructs a new frame
+     * This constructor sets the component's locale property to the value
+     * returned by <code>JComponent.getDefaultLocale</code>.
+     *
+     * @throws HeadlessException if GraphicsEnvironment.isHeadless()
+     *                           returns true.
+     * @see GraphicsEnvironment#isHeadless
+     * @see Component#setSize
+     * @see Component#setVisible
+     * @see JComponent#getDefaultLocale
+     */
+    public SearchEngineMaintenance() throws HeadlessException {
         super("Search Engine Maintenance");
         this.setContentPane(this.Main);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.pack();
         this.setSize(700, 800);
+
+
         this.fileHolderPanel.setViewportView(fileListTable);
+
 
         //This button re-builds the list the array of files if any were added or removed from the file list
         rebuildBtn.addActionListener(e -> {
@@ -51,7 +66,7 @@ public class SearchEngineMaintenance extends JFrame {
 
         //This button will open the file selector then add the file to the file list
         addFileBtn.addActionListener(e -> {
-            File file = FileBrowser.fileSelector();
+
         });
 
         //This button removes a file from the file list then reloads the list
