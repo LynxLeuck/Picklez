@@ -1,6 +1,8 @@
-/*
+package com.picklez;/*
 This Class sets up the GUI for the Search Screen
  */
+import com.picklez.FileBrowser;
+
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.io.File;
@@ -11,17 +13,25 @@ public class SearchEngineMaintenance extends JFrame {
 
     //List of files on For the Database to search can be get or set
     private ArrayList<File>[] fileList;
+    private  String[] columns = new String[] {
+            "File Name", "Status"
+    };
+    private Object[][] data = new Object[][] {
+            {1, "John"},
+            {2, "Rambo"},
+            {3, "Zorro"},
+    };
 
     //These private variables are used by the GUI editor on IntelliJ IDEA Editor
     private TableModel model;
-    private JTable fileListTable;
+    private JTable fileListTable = new JTable(data,columns);
+    private JScrollPane fileHolderPanel;
     private JButton rebuildBtn;
     private JButton removeSelectedFilesButton;
     private JButton addFileBtn;
     private JPanel Main;
     private JButton resetWindowsButton;
     private JPanel bottomOptions;
-    private JScrollPane fileHolderPanel;
     private JPanel fileListSettingsPanel;
     private JLabel labelNumberOfFilesIndexed;
     private JLabel labelSearchEngineVersion;
@@ -33,6 +43,7 @@ public class SearchEngineMaintenance extends JFrame {
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.pack();
         this.setSize(700, 800);
+        this.fileHolderPanel.setViewportView(fileListTable);
 
         //This button re-builds the list the array of files if any were added or removed from the file list
         rebuildBtn.addActionListener(e -> {
@@ -68,5 +79,7 @@ public class SearchEngineMaintenance extends JFrame {
     public void setFileListTable(JTable fileListTable) {
         this.fileListTable = fileListTable;
     }
+
+
 }
 

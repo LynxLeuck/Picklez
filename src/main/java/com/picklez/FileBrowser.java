@@ -1,3 +1,5 @@
+package com.picklez;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;

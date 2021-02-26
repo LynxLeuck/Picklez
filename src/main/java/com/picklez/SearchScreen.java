@@ -1,6 +1,8 @@
-/*
+package com.picklez;/*
 This Class sets up the GUI for the Search Screen
  */
+
+import com.picklez.SearchEngineMaintenance;
 
 import javax.swing.*;
 

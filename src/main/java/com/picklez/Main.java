@@ -1,3 +1,5 @@
+package com.picklez;
+
 public class Main {
 
     SearchScreen searchScreen = new SearchScreen();
