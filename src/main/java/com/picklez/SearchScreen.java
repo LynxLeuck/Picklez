@@ -1,31 +1,77 @@
-package com.picklez;// Set up the GUI for the com.picklez.Main search screen
+package com.picklez;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SearchScreen extends JFrame {
+
+    private JLabel titleLabel;
+    private JTextField inputText;
+    private JTextArea resultsTextArea;
+    private JButton searchButton;
     private JButton maintenanceButton;
     private JButton aboutButton;
-    private JLabel filesIndexedLabel;
-    private JLabel programNameLabel;
     private JLabel searchTermsLabel;
-    private JTextField searchTerms;
-    private JButton searchButton;
-    private JRadioButton searchOption1;
-    private JRadioButton searchOption2;
-    private JRadioButton searchOption3;
+    private JLabel numberOfFilesLabel;
     private JPanel mainPanel;
-    private SearchEngineMaintenance searchEngineMaintenance = new SearchEngineMaintenance();
+    JRadioButton ANDRadioButton;
+    JRadioButton ORRadioButton;
+    JRadioButton EXACTRadioButton;
+    private String searchType;
 
-    public SearchScreen() {
+    /**
+     * Constructs a new frame
+     * This constructor sets the component's locale property to the value
+     * returned by <code>JComponent.getDefaultLocale</code>.
+     *
+     * @throws HeadlessException if GraphicsEnvironment.isHeadless()
+     *                           returns true.
+     * @see GraphicsEnvironment#isHeadless
+     * @see Component#setSize
+     * @see Component#setVisible
+     * @see JComponent#getDefaultLocale
+     */
+    public SearchScreen() throws HeadlessException {
+
         add(mainPanel);
         setTitle("Search Engine");
-        setSize(780, 525);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        maintenanceButton.addActionListener(e -> searchEngineMaintenance.setVisible(true));
-        aboutButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Hello world!", "About Search Engine", JOptionPane.PLAIN_MESSAGE);
-        });
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setVisible(true);
+
+        ANDRadioButton.setActionCommand("AND");
+        ANDRadioButton.addActionListener(this::actionPerformed);
+        ORRadioButton.setActionCommand("OR");
+        ORRadioButton.addActionListener(this::actionPerformed);
+        EXACTRadioButton.setActionCommand("EXACT");
+        EXACTRadioButton.addActionListener(this::actionPerformed);
+
+        // Displays basic information about the program
+        aboutButton.addActionListener(e -> JOptionPane.showConfirmDialog(mainPanel, """
+                Search Engine v1.0
+                Written by Team Picklez
+                Brought to you by pickle.jar""", "Search Engine", JOptionPane.DEFAULT_OPTION)
+        );
+
+        maintenanceButton.addActionListener(e -> new SearchEngineMaintenance());
+        searchButton.addActionListener(e -> search());
     }
+
+    // Sets the search type when a radio button is clicked
+    public void actionPerformed(ActionEvent e) {
+        searchType = e.getActionCommand();
+    }
+
+    // Method executed by search button
+    // Stub data inserted for now
+    private void search() {
+        resultsTextArea.setText(String.format("""
+            Search function not yet implemented.
+            
+            Search type selected: %s""", searchType));
+    }
+
 }
