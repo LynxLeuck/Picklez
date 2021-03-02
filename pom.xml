@@ -25,7 +25,8 @@
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
-                        <manifestEntries><SplashScreen-Image>splash/rick.jpg</SplashScreen-Image></manifestEntries>
+                        <manifestEntries>
+                            <SplashScreen-Image>rick.jpg</SplashScreen-Image></manifestEntries>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>com.picklez.Main</mainClass>
@@ -38,6 +39,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
             </plugin>
+
            </plugins>
     </build>
 
@@ -68,6 +70,7 @@
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
 </project>
