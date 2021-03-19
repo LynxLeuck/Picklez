@@ -57,11 +57,18 @@ public class SearchEngineMaintenance extends JFrame {
             FileDialog fd = new FileDialog((Dialog) null, "Select file", FileDialog.LOAD);
             fd.setVisible(true);
             String filePath = fd.getDirectory() + fd.getFile();
+            //Builds the table model and FileItem Object
+            fileHandler(fd);
+
             tableModel.insertRow(0, new String[]{filePath, "Not indexed"});
         });
 
         // Remove the selected row from the table
         removeSelectedFilesButton.addActionListener(e -> tableModel.removeRow(indexTable.getSelectedRow()));
+    }
+    public static void fileHandler(FileDialog fd ){
+        //Read data for file to add to the File Item and indexModel
+
     }
 
 }

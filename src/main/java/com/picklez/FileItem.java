@@ -7,7 +7,7 @@ public class FileItem implements Comparable <FileItem>{
     public final String name;
     public final long lastUpdate;
     public final int id;
-    public List words;
+    public List<String> words;
     public final String[] tableList;
 
     public FileItem(String path, String name, int lastUpdate, int id ) {
@@ -24,7 +24,6 @@ public class FileItem implements Comparable <FileItem>{
     public void addWord(String word){
         words.add(word);
     }
-
 
     }
 

@@ -11,8 +11,8 @@ public class indexModel extends AbstractTableModel {
 
     indexModel(){
         model = this;
+        //Load in index
     }
-
 
     public static indexModel getModel() {
         //ensures there is a model
@@ -21,6 +21,27 @@ public class indexModel extends AbstractTableModel {
         }
         return model;
     }
+    public void addFile(){
+        //Process file words into gson
+    }
+    public void removeFile(){
+        //Removes item from list
+    }
+    public void updateList(){
+        //Refreshes the words on the list
+        //Has to determine the last time updated and compare to current time
+        //https://mkyong.com/java/how-to-get-the-file-last-modified-date-in-java/
+
+    }
+    private void saveIndex(){
+        //saving json formatted file using gson
+
+    }
+    public void getFileList(){
+        //Builds list from memory
+
+    }
+
 
     /**
      * Returns the number of rows in the model. A
