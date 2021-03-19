@@ -7,7 +7,6 @@
     <groupId>groupId</groupId>
     <artifactId>Picklez</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <build>
         <plugins>
             <plugin>
@@ -26,7 +25,8 @@
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
-                        <manifestEntries><SplashScreen-Image>splash/rick.jpg</SplashScreen-Image></manifestEntries>
+                        <manifestEntries>
+                            <SplashScreen-Image>splash/rick.jpg</SplashScreen-Image></manifestEntries>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>com.picklez.Main</mainClass>
@@ -39,10 +39,16 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
             </plugin>
+
            </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.6</version>
+        </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -60,9 +66,15 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>junit-jupiter-api</artifactId>
             <version>5.8.0-M1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
