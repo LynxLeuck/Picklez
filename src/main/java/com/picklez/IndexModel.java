@@ -22,7 +22,7 @@ public class IndexModel implements Serializable
     private int indexUID;
     @SerializedName("File List")
     @Expose
-    private List<FileItem> fileList = null;
+    private List<FileItem> fileList;
     @Serial
     private final static long serialVersionUID = -5893562234839116493L;
     private final static String filePath = System.getProperty("user.home") + "\\index.json";
@@ -54,14 +54,17 @@ public class IndexModel implements Serializable
         this.fileList = fileList;
     }
 
-    public static IndexModel getModel() {
-        Reader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(filePath));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public static IndexModel getModel() throws IOException {
+        File file = new File(System.getProperty("user.home") , "\\index.json");
+
+        if (!file.isFile() && !file.createNewFile())
+        {
+            throw new IOException("Error creating new file: " + file.getAbsolutePath());
         }
-        return gson.fromJson(reader, IndexModel.class);
+
+        BufferedReader r = new BufferedReader(new FileReader(file));
+
+        return gson.fromJson(r, IndexModel.class);
     }
 
     public String getTeamName() {
@@ -102,8 +105,22 @@ public class IndexModel implements Serializable
         }
     }
 
-    public void addFile(){
-        //Process file words into gson
+    //adds a new file item to the list
+    public void addFile(FileItem file){
+        /* Process file words into gson */
+        if(fileList == null) {
+            setTeamName("Picklez");
+            setVersion(1);
+            this.fileList.add(file);
+            try {
+                saveIndex(getModel());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else{
+        fileList.add(file);
+        }
+
     }
 
     public void removeFile(){
