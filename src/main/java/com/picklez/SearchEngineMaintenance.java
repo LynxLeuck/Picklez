@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class SearchEngineMaintenance extends JFrame {
 
-    private IndexModel model = new IndexModel();
+    private IndexModel model;
     private JPanel maintenancePanel;
     private JLabel searchEngineMaintenanceLabel;
     private JTable indexTable;
@@ -59,9 +59,8 @@ public class SearchEngineMaintenance extends JFrame {
         indexTable.setModel(tableModel);
         tableModel.addColumn("File Name");
         tableModel.addColumn("Status");
-
         try {
-            model.getModel();
+            model = IndexModel.getModel();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,6 +78,7 @@ public class SearchEngineMaintenance extends JFrame {
             File file = new File(fd.getDirectory() + fd.getFile());
             tableModel.insertRow(0, new String[]{filePath, "Not indexed"});
             fileHandler(file);
+            IndexModel.saveIndex(model);
 
 
         });
