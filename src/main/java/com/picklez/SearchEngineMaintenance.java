@@ -1,7 +1,6 @@
 package com.picklez;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,19 +45,6 @@ public class SearchEngineMaintenance extends JFrame {
         setVisible(true);
 
         // Set up table model and add to table
-        DefaultTableModel tableModel = new DefaultTableModel(){
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // All cells false
-                return false;
-            }
-
-        };
-
-        indexTable.setModel(tableModel);
-        tableModel.addColumn("File Name");
-        tableModel.addColumn("Status");
         try {
             model = IndexModel.getModel();
         } catch (IOException e) {
@@ -69,6 +55,8 @@ public class SearchEngineMaintenance extends JFrame {
             model.setVersion(1);
         }
 
+        indexTable.setModel(model);
+
         // Add files to the table on this form
         addFileButton.addActionListener(e -> {
             FileDialog fd = new FileDialog((Dialog) null, "Select file", FileDialog.LOAD);
@@ -76,7 +64,7 @@ public class SearchEngineMaintenance extends JFrame {
             String filePath = fd.getDirectory() + fd.getFile();
             //Creates a file object from the FileDialog to be able to process
             File file = new File(fd.getDirectory() + fd.getFile());
-            tableModel.insertRow(0, new String[]{filePath, "Not indexed"});
+            model.insertRow(0, new String[]{filePath, "Not indexed"});
             fileHandler(file);
             IndexModel.saveIndex(model);
 
@@ -84,7 +72,7 @@ public class SearchEngineMaintenance extends JFrame {
         });
 
         // Remove the selected row from the table
-        removeSelectedFilesButton.addActionListener(e -> tableModel.removeRow(indexTable.getSelectedRow()));
+        removeSelectedFilesButton.addActionListener(e -> model.removeRow(indexTable.getSelectedRow()));
     }
     public void fileHandler(File fd ) {
         //Read data for file to add to the File Item and indexModel
