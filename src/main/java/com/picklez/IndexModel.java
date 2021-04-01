@@ -1,6 +1,7 @@
 package com.picklez;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -8,7 +9,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class IndexModel implements Serializable
+import javax.swing.table.DefaultTableModel;
+
+// Class now extends DefaultTableModel as originally designed
+public class IndexModel extends DefaultTableModel implements Serializable
 {
 
     @SerializedName("Team Name")
@@ -27,6 +31,7 @@ public class IndexModel implements Serializable
     private final static long serialVersionUID = -5893562234839116493L;
     private final static String filePath = System.getProperty("user.home") + "\\index.json";
     private final static Gson gson = new GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation() // Ensure only desired fields are persisted
             .setPrettyPrinting()
             .serializeNulls()
             .create();
@@ -37,14 +42,22 @@ public class IndexModel implements Serializable
      *
      */
     public IndexModel() {
+        // Table settings moved from SearchEngineMaintenance
+        addColumn("File Name");
+        addColumn("Status");
+        this.teamName = "Picklez";
+        this.version = 1;
+        this.indexUID = 0;
+        this.fileList = new ArrayList<FileItem>();
+
     }
 
     /**
      *
-     * @param teamName
-     * @param fileList
-     * @param version
-     * @param indexUID
+     * @param teamName Name of the team that created this application
+     * @param fileList List of files that are contained in the Index
+     * @param version Current version number of the application
+     * @param indexUID Unique ID for files in the Index
      */
     public IndexModel(String teamName, float version, int indexUID, List<FileItem> fileList) {
         super();
@@ -55,7 +68,7 @@ public class IndexModel implements Serializable
     }
 
     public static IndexModel getModel() throws IOException {
-        File file = new File(System.getProperty("user.home") , "\\index.json");
+        File file = new File(filePath);  // Replaced hardcoded value
 
         if (!file.isFile() && !file.createNewFile())
         {
@@ -131,5 +144,12 @@ public class IndexModel implements Serializable
         //Refreshes the words on the list
         //Has to determine the last time updated and compare to current time
         //https://mkyong.com/java/how-to-get-the-file-last-modified-date-in-java/
+    }
+
+    // Moved from SearchEngineMaintenance
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        // All cells false
+        return false;
     }
 }
