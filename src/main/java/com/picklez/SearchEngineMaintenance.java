@@ -5,13 +5,13 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SearchEngineMaintenance extends JFrame {
 
-    private IndexModel model;
+    private final IndexModel model;
     private JPanel maintenancePanel;
     private JLabel searchEngineMaintenanceLabel;
     private JTable indexTable;
@@ -39,7 +39,7 @@ public class SearchEngineMaintenance extends JFrame {
 
 
         try {
-            model.getModel();
+            IndexModel.getModel();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class SearchEngineMaintenance extends JFrame {
 
         // Set up table model and add to table
 
-        if(model.getTeamName() == null){
+        if (model.getTeamName() == null) {
             model.setTeamName("Picklez");
             model.setVersion(1);
         }
@@ -80,7 +80,8 @@ public class SearchEngineMaintenance extends JFrame {
         // Remove the selected row from the table
         removeSelectedFilesButton.addActionListener(e -> model.removeRow(indexTable.getSelectedRow()));
     }
-    public void fileHandler(File fd ) {
+
+    public void fileHandler(File fd) {
         //Read data for file to add to the File Item and indexModel
 
         //builds file basic's
@@ -89,28 +90,35 @@ public class SearchEngineMaintenance extends JFrame {
         String name = fd.getName();
         int lastUpdate = (int) fd.lastModified();
         String words = "";
-        List<String> wordList = null;
+        List<WordItem> convertedWordList = new ArrayList<WordItem>();
+        int wordPosition = 0;
 
+        FileItem fileItem = new FileItem(model.getIndexUID(), path, name, lastUpdate, convertedWordList);
         //reads the file and splits it into a List of wordList
         try {
             Scanner myReader = new Scanner(fd);
             while (myReader.hasNext()) {
                 String data = myReader.next();
-                if(data != null) {
-                    if(words != "") {
+
+                if (data != null) {
+                    if (words != "") {
                         words = words + " " + data.replace("[^a-zA-Z0-9]", "");
-                    }else{ words =  data.replace("[^a-zA-Z0-9]", "");}
+                    } else {
+                        words = data.replace("[^a-zA-Z0-9]", "");
+                    }
+                    convertedWordList.add(new WordItem(data, fileItem.getId(), wordPosition));
+                    wordPosition++;
                 }
+
             }
-            wordList = Arrays.asList(words.split(" "));
-            System.out.println(wordList);
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        FileItem fileItem = new FileItem(id, path, name, lastUpdate, wordList);
-            model.addFile(fileItem);
+        fileItem.setWords(convertedWordList);
+        model.addFile(fileItem);
+        model.setIndexUID(model.getIndexUID() + 1);
 
     }
 
