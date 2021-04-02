@@ -22,15 +22,18 @@ public class IndexModel extends DefaultTableModel implements Serializable
     @SerializedName("Version")
     @Expose
     private float version;
+
+
+
     @SerializedName("Index UID")
     @Expose
     private int indexUID;
     @SerializedName("File List")
     @Expose
     private List<FileItem> fileList;
-    @SerializedName("File List")
+    @SerializedName("Word List")
     @Expose
-    private Set<String> wordList;
+    private List<WordItem> wordList;
     @Serial
     private final static long serialVersionUID = -5893562234839116493L;
     private final static String filePath = System.getProperty("user.home") + "\\index.json";
@@ -53,7 +56,7 @@ public class IndexModel extends DefaultTableModel implements Serializable
         this.version = 1;
         this.indexUID = 0;
         this.fileList = new ArrayList<FileItem>();
-
+        this.wordList = new ArrayList<WordItem>();
 
     }
 
@@ -64,7 +67,7 @@ public class IndexModel extends DefaultTableModel implements Serializable
      * @param version Current version number of the application
      * @param indexUID Unique ID for files in the Index
      */
-    public IndexModel(String teamName, float version, int indexUID, List<FileItem> fileList, Set<String> wordList) {
+    public IndexModel(String teamName, float version, int indexUID, List<FileItem> fileList, List<WordItem> wordList) {
         super();
         this.teamName = teamName;
         this.version = version;
@@ -123,10 +126,17 @@ public class IndexModel extends DefaultTableModel implements Serializable
             e.printStackTrace();
         }
     }
+    public int getIndexUID() {
+        return indexUID;
+    }
 
+    public void setIndexUID(int indexUID) {
+        this.indexUID = indexUID;
+    }
     //adds a new file item to the list
     public void addFile(FileItem file){
         /* Process file words into gson */
+
         if(fileList == null) {
             setTeamName("Picklez");
             setVersion(1);
@@ -138,6 +148,7 @@ public class IndexModel extends DefaultTableModel implements Serializable
             }
         } else{
         fileList.add(file);
+
 
         }
 
