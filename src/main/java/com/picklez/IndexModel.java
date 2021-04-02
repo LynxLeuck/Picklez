@@ -141,6 +141,7 @@ public class IndexModel extends DefaultTableModel implements Serializable {
             }
         } else {
             fileList.add(file);
+            wordList.addAll(file.getWords());
 
 
         }
