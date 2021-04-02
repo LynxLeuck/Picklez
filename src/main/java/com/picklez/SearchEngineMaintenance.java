@@ -70,7 +70,7 @@ public class SearchEngineMaintenance extends JFrame {
             String filePath = fd.getDirectory() + fd.getFile();
             //Creates a file object from the FileDialog to be able to process
             File file = new File(fd.getDirectory() + fd.getFile());
-            model.insertRow(0, new String[]{filePath, "Not indexed"});
+            model.insertRow(0, new String[]{filePath, "Indexed"});
             fileHandler(file);
             IndexModel.saveIndex(model);
 
@@ -88,24 +88,28 @@ public class SearchEngineMaintenance extends JFrame {
         String path = fd.getAbsolutePath();
         String name = fd.getName();
         int lastUpdate = (int) fd.lastModified();
-        String wordList = null;
-        List<String> words = null;
+        String words = "";
+        List<String> wordList = null;
 
-        //reads the file and splits it into a List of words
+        //reads the file and splits it into a List of wordList
         try {
             Scanner myReader = new Scanner(fd);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
-                wordList = wordList + " " + data;
+            while (myReader.hasNext()) {
+                String data = myReader.next();
+                if(data != null) {
+                    if(words != "") {
+                        words = words + " " + data.replace("[^a-zA-Z0-9]", "");
+                    }else{ words =  data.replace("[^a-zA-Z0-9]", "");}
+                }
             }
-            words = Arrays.asList(wordList.split(" "));
+            wordList = Arrays.asList(words.split(" "));
+            System.out.println(wordList);
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        FileItem fileItem = new FileItem(id, path, name, lastUpdate, words);
+        FileItem fileItem = new FileItem(id, path, name, lastUpdate, wordList);
             model.addFile(fileItem);
 
     }

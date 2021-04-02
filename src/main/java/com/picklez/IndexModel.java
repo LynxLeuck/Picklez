@@ -3,6 +3,7 @@ package com.picklez;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,6 +28,9 @@ public class IndexModel extends DefaultTableModel implements Serializable
     @SerializedName("File List")
     @Expose
     private List<FileItem> fileList;
+    @SerializedName("File List")
+    @Expose
+    private Set<String> wordList;
     @Serial
     private final static long serialVersionUID = -5893562234839116493L;
     private final static String filePath = System.getProperty("user.home") + "\\index.json";
@@ -50,6 +54,7 @@ public class IndexModel extends DefaultTableModel implements Serializable
         this.indexUID = 0;
         this.fileList = new ArrayList<FileItem>();
 
+
     }
 
     /**
@@ -59,12 +64,13 @@ public class IndexModel extends DefaultTableModel implements Serializable
      * @param version Current version number of the application
      * @param indexUID Unique ID for files in the Index
      */
-    public IndexModel(String teamName, float version, int indexUID, List<FileItem> fileList) {
+    public IndexModel(String teamName, float version, int indexUID, List<FileItem> fileList, Set<String> wordList) {
         super();
         this.teamName = teamName;
         this.version = version;
         this.indexUID = indexUID;
         this.fileList = fileList;
+        this.wordList = wordList;
     }
 
     public static IndexModel getModel() throws IOException {
@@ -132,6 +138,7 @@ public class IndexModel extends DefaultTableModel implements Serializable
             }
         } else{
         fileList.add(file);
+
         }
 
     }
