@@ -1,15 +1,17 @@
 package com.picklez;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
-public class FileItem implements Serializable, Comparable<FileItem>
-{
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.List;
 
+public class FileItem implements Serializable, Comparable<FileItem> {
+
+    @Serial
+    private final static long serialVersionUID = -6183808971942914447L;
     @SerializedName("id")
     @Expose
     private int id;
@@ -24,26 +26,22 @@ public class FileItem implements Serializable, Comparable<FileItem>
     private int lastUpdate;
     @SerializedName("words")
     @Expose
-    private List<String> words = null;
-    @Serial
-    private final static long serialVersionUID = -6183808971942914447L;
+    private List<WordItem> words = null;
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public FileItem() {
     }
 
     /**
-     *
      * @param path
      * @param lastUpdate
      * @param name
      * @param words
      * @param id
      */
-    public FileItem(int id, String path, String name, int lastUpdate, List<String> words) {
+    public FileItem(int id, String path, String name, int lastUpdate, List<WordItem> words) {
         super();
         this.id = id;
         this.path = path;
@@ -84,11 +82,11 @@ public class FileItem implements Serializable, Comparable<FileItem>
         this.lastUpdate = lastUpdate;
     }
 
-    public List<String> getWords() {
+    public List<WordItem> getWords() {
         return words;
     }
 
-    public void setWords(List<String> words) {
+    public void setWords(List<WordItem> words) {
         this.words = words;
     }
 
