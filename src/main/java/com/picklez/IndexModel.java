@@ -1,30 +1,32 @@
 package com.picklez;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import javax.swing.table.DefaultTableModel;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Class now extends DefaultTableModel as originally designed
-public class IndexModel extends DefaultTableModel implements Serializable
-{
+public class IndexModel extends DefaultTableModel implements Serializable {
 
+    @Serial
+    private final static long serialVersionUID = -5893562234839116493L;
+    private final static String filePath = System.getProperty("user.home") + "\\index.json";
+    private final static Gson gson = new GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation() // Ensure only desired fields are persisted
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create();
     @SerializedName("Team Name")
     @Expose
     private String teamName;
     @SerializedName("Version")
     @Expose
     private float version;
-
-
-
     @SerializedName("Index UID")
     @Expose
     private int indexUID;
@@ -34,19 +36,10 @@ public class IndexModel extends DefaultTableModel implements Serializable
     @SerializedName("Word List")
     @Expose
     private List<WordItem> wordList;
-    @Serial
-    private final static long serialVersionUID = -5893562234839116493L;
-    private final static String filePath = System.getProperty("user.home") + "\\index.json";
-    private final static Gson gson = new GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation() // Ensure only desired fields are persisted
-            .setPrettyPrinting()
-            .serializeNulls()
-            .create();
 
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public IndexModel() {
         // Table settings moved from SearchEngineMaintenance
@@ -61,10 +54,9 @@ public class IndexModel extends DefaultTableModel implements Serializable
     }
 
     /**
-     *
      * @param teamName Name of the team that created this application
      * @param fileList List of files that are contained in the Index
-     * @param version Current version number of the application
+     * @param version  Current version number of the application
      * @param indexUID Unique ID for files in the Index
      */
     public IndexModel(String teamName, float version, int indexUID, List<FileItem> fileList, List<WordItem> wordList) {
@@ -79,14 +71,27 @@ public class IndexModel extends DefaultTableModel implements Serializable
     public static IndexModel getModel() throws IOException {
         File file = new File(filePath);  // Replaced hardcoded value
 
-        if (!file.isFile() && !file.createNewFile())
-        {
+        if (!file.isFile() && !file.createNewFile()) {
             throw new IOException("Error creating new file: " + file.getAbsolutePath());
         }
 
         BufferedReader r = new BufferedReader(new FileReader(file));
 
         return gson.fromJson(r, IndexModel.class);
+    }
+
+    // Save index to file
+    public static void saveIndex(IndexModel index) {
+        Writer writer;
+        // Unsure if try/catch is best here or if exception should just get thrown up
+        try {
+            writer = new BufferedWriter(new FileWriter(filePath));
+            gson.toJson(index, writer);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTeamName() {
@@ -113,19 +118,6 @@ public class IndexModel extends DefaultTableModel implements Serializable
         this.fileList = fileList;
     }
 
-    // Save index to file
-    public static void saveIndex(IndexModel index) {
-        Writer writer;
-        // Unsure if try/catch is best here or if exception should just get thrown up
-        try {
-            writer = new BufferedWriter(new FileWriter(filePath));
-            gson.toJson(index, writer);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public int getIndexUID() {
         return indexUID;
     }
@@ -133,11 +125,12 @@ public class IndexModel extends DefaultTableModel implements Serializable
     public void setIndexUID(int indexUID) {
         this.indexUID = indexUID;
     }
+
     //adds a new file item to the list
-    public void addFile(FileItem file){
+    public void addFile(FileItem file) {
         /* Process file words into gson */
 
-        if(fileList == null) {
+        if (fileList == null) {
             setTeamName("Picklez");
             setVersion(1);
             this.fileList.add(file);
@@ -146,19 +139,19 @@ public class IndexModel extends DefaultTableModel implements Serializable
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else{
-        fileList.add(file);
+        } else {
+            fileList.add(file);
 
 
         }
 
     }
 
-    public void removeFile(){
+    public void removeFile() {
         //Removes item from list
     }
 
-    public void updateList(){
+    public void updateList() {
         //Refreshes the words on the list
         //Has to determine the last time updated and compare to current time
         //https://mkyong.com/java/how-to-get-the-file-last-modified-date-in-java/

@@ -4,6 +4,7 @@ package com.picklez;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
@@ -31,12 +32,11 @@ public class WordItem {
     private final static long serialVersionUID = -6183808971942914447L;
 
     /**
-     *
      * @param word
      * @param fileLocation
      */
     public WordItem(String word, Integer fileID, Integer fileLocation) {
-        Integer[] file = new Integer[]  {fileID,fileLocation};
+        Integer[] file = new Integer[]{fileID, fileLocation};
         this.word = word;
         this.filePosition = new ArrayList<Integer[]>();
         //Creates a singular integer for the file location to store as a word
@@ -56,14 +56,15 @@ public class WordItem {
      *                              from being compared to this object.
      */
     public int compareTo(@NotNull WordItem o) {
-        if (getWord().toLowerCase(Locale.ROOT) == o.getWord().toLowerCase(Locale.ROOT) ){
+        if (getWord().toLowerCase(Locale.ROOT) == o.getWord().toLowerCase(Locale.ROOT)) {
             return 1;
         }
         return 0;
     }
-    public String toString(){
+
+    public String toString() {
         System.out.println(word + getFilePosition());
-        return word +  " " + getFilePosition();
+        return word + " " + getFilePosition();
     }
 
 
