@@ -6,18 +6,17 @@ For more information view README.md
 package com.picklez;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SearchEngineMaintenance extends JFrame {
 
-    private IndexModel model;
+    private final IndexModel model;
     private JPanel maintenancePanel;
     private JLabel searchEngineMaintenanceLabel;
     private JTable indexTable;
@@ -41,6 +40,14 @@ public class SearchEngineMaintenance extends JFrame {
      */
     public SearchEngineMaintenance() throws HeadlessException {
 
+        model = new IndexModel();
+        try {
+            model.getModel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         // Set up GUI
         add(maintenancePanel);
@@ -51,29 +58,14 @@ public class SearchEngineMaintenance extends JFrame {
         setVisible(true);
 
         // Set up table model and add to table
-        DefaultTableModel tableModel = new DefaultTableModel(){
 
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // All cells false
-                return false;
-            }
-
-        };
-
-        indexTable.setModel(tableModel);
-        tableModel.addColumn("File Name");
-        tableModel.addColumn("Status");
-        try {
-            model = IndexModel.getModel();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(model.getTeamName() == null){
+        if (model != null) {
             model.setTeamName("Picklez");
             model.setVersion(1);
         }
 
+        indexTable.setModel(model);
+        model.getTableModel();
         // Add files to the table on this form
         addFileButton.addActionListener(e -> {
             FileDialog fd = new FileDialog((Dialog) null, "Select file", FileDialog.LOAD);
@@ -81,17 +73,17 @@ public class SearchEngineMaintenance extends JFrame {
             String filePath = fd.getDirectory() + fd.getFile();
             //Creates a file object from the FileDialog to be able to process
             File file = new File(fd.getDirectory() + fd.getFile());
-            tableModel.insertRow(0, new String[]{filePath, "Not indexed"});
+            model.insertRow(0, new String[]{filePath, "Indexed"});
             fileHandler(file);
             IndexModel.saveIndex(model);
-
 
         });
 
         // Remove the selected row from the table
-        removeSelectedFilesButton.addActionListener(e -> tableModel.removeRow(indexTable.getSelectedRow()));
+        removeSelectedFilesButton.addActionListener(e -> model.removeRow(indexTable.getSelectedRow()));
     }
-    public void fileHandler(File fd ) {
+
+    public void fileHandler(File fd) {
         //Read data for file to add to the File Item and indexModel
 
         //builds file basic's
@@ -99,25 +91,36 @@ public class SearchEngineMaintenance extends JFrame {
         String path = fd.getAbsolutePath();
         String name = fd.getName();
         int lastUpdate = (int) fd.lastModified();
-        String wordList = null;
-        List<String> words = null;
+        String words = "";
+        List<WordItem> convertedWordList = new ArrayList<WordItem>();
+        int wordPosition = 0;
 
-        //reads the file and splits it into a List of words
+        FileItem fileItem = new FileItem(model.getIndexUID(), path, name, lastUpdate, convertedWordList);
+        //reads the file and splits it into a List of wordList
         try {
             Scanner myReader = new Scanner(fd);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
-                wordList = wordList + " " + data;
+            while (myReader.hasNext()) {
+                String data = myReader.next();
+
+                if (data != null) {
+                    if (words != "") {
+                        words = words + " " + data.replace("[^a-zA-Z0-9]", "");
+                    } else {
+                        words = data.replace("[^a-zA-Z0-9]", "");
+                    }
+                    convertedWordList.add(new WordItem(data, fileItem.getId(), wordPosition));
+                    wordPosition++;
+                }
+
             }
-            words = Arrays.asList(wordList.split(" "));
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        FileItem fileItem = new FileItem(id, path, name, lastUpdate, words);
-            model.addFile(fileItem);
+        fileItem.setWords(convertedWordList);
+        model.addFile(fileItem);
+        model.setIndexUID(model.getIndexUID() + 1);
 
     }
 
