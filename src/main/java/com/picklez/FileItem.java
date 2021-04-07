@@ -1,3 +1,8 @@
+/*
+This file is a part of the Search Engine project for COP2805C
+This project was created by Lynx Leuck, Ulas Koca, and Matthew Maynard
+For more information view README.md
+ */
 package com.picklez;
 
 import java.io.Serial;
