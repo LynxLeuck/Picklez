@@ -3,9 +3,10 @@ package com.picklez;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class SearchScreen extends JFrame {
-
+    private IndexModel model;
     private JLabel titleLabel;
     private JTextField inputText;
     private JTextArea resultsTextArea;
@@ -68,6 +69,14 @@ public class SearchScreen extends JFrame {
     // Method executed by search button
     // Stub data inserted for now
     private void search() {
+
+        model = new IndexModel();
+        try {
+            model.getModel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        model.getWordList();
         resultsTextArea.setText(String.format("""
             Search function not yet implemented.
             

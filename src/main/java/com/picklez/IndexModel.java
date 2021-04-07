@@ -8,7 +8,9 @@ import com.google.gson.annotations.SerializedName;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 // Class now extends DefaultTableModel as originally designed
 public class IndexModel extends DefaultTableModel implements Serializable {
@@ -36,8 +38,9 @@ public class IndexModel extends DefaultTableModel implements Serializable {
     @SerializedName("Word List")
     @Expose
     private List<WordItem> wordList;
-
-
+    public List<WordItem> getWordList() {
+        return wordList;
+    }
     /**
      * No args constructor for use in serialization
      */
@@ -50,6 +53,7 @@ public class IndexModel extends DefaultTableModel implements Serializable {
         this.indexUID = 0;
         this.fileList = new ArrayList<FileItem>();
         this.wordList = new ArrayList<WordItem>();
+
 
     }
 
@@ -68,16 +72,29 @@ public class IndexModel extends DefaultTableModel implements Serializable {
         this.wordList = wordList;
     }
 
-    public static IndexModel getModel() throws IOException {
+    public IndexModel getModel() throws IOException {
         File file = new File(filePath);  // Replaced hardcoded value
 
         if (!file.isFile() && !file.createNewFile()) {
+
             throw new IOException("Error creating new file: " + file.getAbsolutePath());
         }
 
-        BufferedReader r = new BufferedReader(new FileReader(file));
 
+        BufferedReader r = new BufferedReader(new FileReader(file));
         return gson.fromJson(r, IndexModel.class);
+    }
+    public void getTableModel(){
+        try {
+            getModel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(FileItem file1: fileList){
+            super.insertRow(0,new String[]{file1.getName(),"Indexed"});
+        }
+
+
     }
 
     // Save index to file
@@ -141,7 +158,10 @@ public class IndexModel extends DefaultTableModel implements Serializable {
             }
         } else {
             fileList.add(file);
-            wordList.addAll(file.getWords());
+            Set<WordItem> hSet = new HashSet<>(wordList);
+            hSet.addAll(wordList);
+            wordList.clear();
+            wordList.addAll(hSet);
 
 
         }

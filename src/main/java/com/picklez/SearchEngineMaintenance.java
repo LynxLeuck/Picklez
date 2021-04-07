@@ -36,13 +36,12 @@ public class SearchEngineMaintenance extends JFrame {
     public SearchEngineMaintenance() throws HeadlessException {
 
         model = new IndexModel();
-
-
         try {
-            IndexModel.getModel();
+            model.getModel();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
 
         // Set up GUI
@@ -55,14 +54,13 @@ public class SearchEngineMaintenance extends JFrame {
 
         // Set up table model and add to table
 
-        if (model.getTeamName() == null) {
+        if (model != null) {
             model.setTeamName("Picklez");
             model.setVersion(1);
         }
 
         indexTable.setModel(model);
-
-
+        model.getTableModel();
         // Add files to the table on this form
         addFileButton.addActionListener(e -> {
             FileDialog fd = new FileDialog((Dialog) null, "Select file", FileDialog.LOAD);
@@ -73,7 +71,6 @@ public class SearchEngineMaintenance extends JFrame {
             model.insertRow(0, new String[]{filePath, "Indexed"});
             fileHandler(file);
             IndexModel.saveIndex(model);
-
 
         });
 
